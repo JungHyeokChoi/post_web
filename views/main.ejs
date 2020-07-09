@@ -38,5 +38,35 @@
       <div class= "mx-auto text-center">
         <a href="/insert"><button type="button" class="btn btn-primary">Create</button></a>
       </div>
+
+      <br><br>
+      <table class="table table-bordered" style="text-align: center;">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">User Number</th>
+            <th scope="col">Username</th>
+            <th scope="col">Doc Type</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Words</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0; i < user.length; i++) { %>
+          <tr>
+                <td><%= user[i].Key%></td>
+                <td><%= user[i].Record.username%></td>
+                <td><%= user[i].Record.docType%></td>
+                <td><%= user[i].Record.email%></td>
+                <td><%= user[i].Record.phone%></td>
+                <td><%= user[i].Record.words%></td>
+          </tr>
+          <% } %>
+        </tbody>
+        <tr></tr>
+    </table>      
+    <div class= "mx-auto text-center">
+      <a href="/createuser"><button type="button" class="btn btn-primary">Create User</button></a>
+    </div>
 </section>
 <%- include('_footer.ejs') -%>

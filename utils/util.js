@@ -12,7 +12,7 @@ const fs = require('fs');
 var queryAllUsers = async () => {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..' ,'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
@@ -39,9 +39,11 @@ var queryAllUsers = async () => {
         const contract = network.getContract('fabpost');
 
         // Evaluate the specified transaction.
-        const result = await contract.evaluateTransaction('queryAllBlogs');
+        const result = await contract.evaluateTransaction('queryAllUsers');
 
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+
+        return result.toString();
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
@@ -52,7 +54,7 @@ var queryAllUsers = async () => {
 var queryAllBlogs = async () => {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
@@ -79,15 +81,11 @@ var queryAllBlogs = async () => {
         const contract = network.getContract('fabpost');
 
         // Evaluate the specified transaction.
-        // queryUser transaction - requires 1 argument, ex: ('queryUser', 'USER4')
-        // queryAllUsers transaction - requires no arguments, ex: ('queryAllUsers')
-
-        // queryBlog transaction - requires 1 argument, ex: ('queryUser', 'BLOG1')
-        // queryAllBlogs transaction - requires no arguments, ex: ('queryAllBlogs')
-
         const result = await contract.evaluateTransaction('queryAllBlogs');
 
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+
+        return result.toString();
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
@@ -98,7 +96,7 @@ var queryAllBlogs = async () => {
 var queryUser = async (userNumber) => {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
@@ -129,6 +127,8 @@ var queryUser = async (userNumber) => {
 
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
+        return result.toString();
+
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
         process.exit(1);
@@ -138,7 +138,7 @@ var queryUser = async (userNumber) => {
 var queryBlog = async (blogNumber) => {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..' , 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
@@ -169,6 +169,8 @@ var queryBlog = async (blogNumber) => {
 
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
+        return result.toString();
+
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
         process.exit(1);
@@ -178,7 +180,7 @@ var queryBlog = async (blogNumber) => {
 var createUser = async (userNumber, username, email, phone, words) => {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
@@ -221,7 +223,7 @@ var createUser = async (userNumber, username, email, phone, words) => {
 var createBlog = async (blogNumber, userNumber, title, desc) => {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
@@ -264,7 +266,7 @@ var createBlog = async (blogNumber, userNumber, title, desc) => {
 var changeUserName = async (userNumber, username) => {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
@@ -307,7 +309,7 @@ var changeUserName = async (userNumber, username) => {
 var changeBlog = async (blogNumber, title, newDesc) => {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.

@@ -3,6 +3,7 @@ var router = express.Router()
 var User = require('../models/User.js')
 var Noticeboard = require('../models/Noticeboard.js')
 var moment = require('moment')
+var queryUtil = require('../utils/util')
 
 moment.locale('ko')
 
@@ -70,33 +71,16 @@ function authenticate(passport){
                 failureFlash : true    
             })
         )
-        // .post(async (req, res, next) => {
-        //     var username = await req.body.username
-        //     var passwordHash = await req.body.passwordHash
-            
-        //     User.findOne({username:username} ,(err,result) =>{
-        //         if(err){
-        //             console.log(err.body)
-        //         }
-        //         if(!result){
-        //             res.send(`${username} is not exist`)
-        //         } else {
-        //             if(result.passwordHash == passwordHash){
-        //                 console.log(username)
-        //                 res.render('index.ejs', {data:result.username})
-        //             }
-        //             else{
-        //                 res.send(`${username}'s password is wrong`)
-        //             }
-        //         }
-        //     })
-        // })
 
     router.route('/main')
-        .get(loggedInOnly, (req, res, next) => {
-            Noticeboard.find((err, result) => {
+        .get(loggedInOnly, async(req, res, next) => {
+            var userData = await queryUtil.queryAllUsers()
+
+            await Noticeboard.find((err, result) => {
                 if(err) { console.log(err) }
-                res.render('main', {data:result, moment})
+
+                var user = JSON.parse(userData)
+                res.render('main', {data:result, user:user ,moment })
             }).sort({"title" : 1})
         })
         .post(loggedInOnly, (req ,res, next) => {
@@ -123,6 +107,13 @@ function authenticate(passport){
             contact.author = req.body.author
             contact.email = req.body.email
             contact.description = req.body.description
+
+            var blogNumber = req.body.blogNumber
+            var userNumber = req.body.userNumber
+            var title = req.body.title
+            var description = req.body.description
+
+            queryUtil.createBlog(blogNumber, userNumber, title, description)
 
             contact.save((err, result)=>{
                 if(err) {
