@@ -1,0 +1,38 @@
+<%- include('_header.ejs') -%>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h1 class="m-0 font-weight-bold text-primary">Blog(Block Chain)</h1>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">Blog Number</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (var i = 0; i < data.length; i++) { %>
+                        <tr>
+                            <td><%= data[i].Key%></td>
+                            <td><%= data[i].Record.author.username%></td>
+                            <td><%= data[i].Record.title%></td>
+                            <td><%= data[i].Record.desc%></td>
+                            <td><a href="/updateBlog/<%= data[i].Key %>"><button type="button" class="btn btn-info">Update</button></a></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class= "mx-auto text-center">
+            <a href="/createBlog"><button type="button" class="btn btn-primary">Create</button></a>
+        </div>
+        </div>
+    </div>
+</div>
+<%- include('_footer.ejs') -%>

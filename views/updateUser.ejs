@@ -1,0 +1,30 @@
+<%- include('_header.ejs') -%>
+<div class="container">
+  <div class="col-md-6 mx-auto text-center">
+    <div class="header-title">
+      <h1 class="wv-heading--title">Upadte User</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="myform form ">
+        <form action="/updateUser/<%= userNumber %>" method="POST">
+          <div class="form-group">
+            <input type="text" name="userNumber" class="form-control my-input" id="userNumberInput" value="<%= userNumber %>" disabled>
+          </div>
+          <div class="form-group">
+            <input type="text" name="oldUsername" class="form-control my-input" id="oldUsernameInput" value="<%= data.username %>" disabled>
+          </div>
+          <div class="form-group">
+            <input type="text" name="newUsername" class="form-control my-input" id="newUsernameInput" placeholder="New Username">
+          </div>
+          <div class= "mx-auto text-center">
+            <button type="submit" class="btn btn-info">Update</button>
+            <a href="/user"><button type="button" class="btn btn-secondary">Cancel</button></a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('_footer.ejs') -%>

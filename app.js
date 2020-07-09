@@ -41,7 +41,15 @@ app.use(session({
    This is Because the Request URL error occurs.
 */ 
 app.use(express.static(__dirname + '/public'))
-app.use(express.static(path.join(__dirname, 'public/css/')));
+app.use(express.static(path.join(__dirname, 'public/css')));
+app.use(express.static(path.join(__dirname, 'public/scss')));
+app.use(express.static(path.join(__dirname, 'public/vendor')));
+app.use(express.static(path.join(__dirname, 'public/js')));
+app.use(express.static(path.join(__dirname, 'public/assets')));
+
+console.log(path.join(__dirname, 'public/vendor'))
+
+
 app.use(flash())
 
 //Passport

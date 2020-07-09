@@ -18,7 +18,7 @@ var queryAllUsers = async () => {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -41,7 +41,7 @@ var queryAllUsers = async () => {
         // Evaluate the specified transaction.
         const result = await contract.evaluateTransaction('queryAllUsers');
 
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        // console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         return result.toString();
 
@@ -60,7 +60,7 @@ var queryAllBlogs = async () => {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -83,7 +83,7 @@ var queryAllBlogs = async () => {
         // Evaluate the specified transaction.
         const result = await contract.evaluateTransaction('queryAllBlogs');
 
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        // console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         return result.toString();
 
@@ -100,9 +100,9 @@ var queryUser = async (userNumber) => {
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), '..', 'wallet');
+        const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -125,7 +125,7 @@ var queryUser = async (userNumber) => {
         // Evaluate the specified transaction.
         const result = await contract.evaluateTransaction('queryUser', userNumber);
 
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        // console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         return result.toString();
 
@@ -144,7 +144,7 @@ var queryBlog = async (blogNumber) => {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -167,7 +167,7 @@ var queryBlog = async (blogNumber) => {
         // Evaluate the specified transaction.
         const result = await contract.evaluateTransaction('queryUser', blogNumber);
 
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        // console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         return result.toString();
 
@@ -186,7 +186,7 @@ var createUser = async (userNumber, username, email, phone, words) => {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -209,7 +209,7 @@ var createUser = async (userNumber, username, email, phone, words) => {
         // Submit the specified transaction.
         await contract.submitTransaction('createUser', userNumber, username, email, phone, words);
 
-        console.log('Transaction has been submitted');
+        // console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.
         await gateway.disconnect();
@@ -229,7 +229,7 @@ var createBlog = async (blogNumber, userNumber, title, desc) => {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -250,9 +250,9 @@ var createBlog = async (blogNumber, userNumber, title, desc) => {
         const contract = network.getContract('fabpost');
 
         // Submit the specified transaction.
-        await contract.submitTransaction('createBlog', userNumber, blogNumber, title, desc);
+        await contract.submitTransaction('createBlog', blogNumber, userNumber, title, desc);
 
-        console.log('Transaction has been submitted');
+        // console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.
         await gateway.disconnect();
@@ -272,7 +272,7 @@ var changeUserName = async (userNumber, username) => {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -295,7 +295,7 @@ var changeUserName = async (userNumber, username) => {
         // Submit the specified transaction. 
         await contract.submitTransaction('changeUserName', userNumber, username);
 
-        console.log('Transaction has been submitted');
+        // console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.
         await gateway.disconnect();
@@ -315,7 +315,7 @@ var changeBlog = async (blogNumber, title, newDesc) => {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('appUser');
@@ -338,7 +338,7 @@ var changeBlog = async (blogNumber, title, newDesc) => {
         // Submit the specified transaction.
         await contract.submitTransaction('changeBlog', blogNumber, title, newDesc);
 
-        console.log('Transaction has been submitted');
+        // console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.
         await gateway.disconnect();

@@ -1,0 +1,42 @@
+<%- include('_header.ejs') -%>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h1 class="m-0 font-weight-bold text-primary">User(Block Chain)</h1>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">User Number</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Doc Type</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Words</th>
+                        <th scope="col">Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (var i = 0; i < data.length; i++) { %>
+                        <tr>
+                            <td><%= data[i].Key%></td>
+                            <td><%= data[i].Record.username%></td>
+                            <td><%= data[i].Record.docType%></td>
+                            <td><%= data[i].Record.email%></td>
+                            <td><%= data[i].Record.phone%></td>
+                            <td><%= data[i].Record.words%></td>
+                            <td><a href="/updateUser/<%= data[i].Key %>"><button type="button" class="btn btn-info">Update</button></a></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class= "mx-auto text-center">
+            <a href="/createUser"><button type="button" class="btn btn-primary">Create</button></a>
+        </div>
+        </div>
+    </div>
+</div>
+<%- include('_footer.ejs') -%>

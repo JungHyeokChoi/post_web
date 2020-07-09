@@ -20,7 +20,7 @@ function loggedOutOnly(req, res, next){
 function authenticate(passport){
     router.use((req, res, next) => {
         res.locals.currentUser = req.user
-        console.log(res.locals.currentUser)
+        // console.log(res.locals.currentUser)
         res.locals.errors = req.flash("error");
         res.locals.infos = req.flash("info");
         next()
@@ -32,7 +32,7 @@ function authenticate(passport){
     })
 
     router.route('/signup')
-        .get(loggedOutOnly, (req, res, next) =>{
+        .get(loggedOutOnly, (req, res) =>{
             res.render('signup', {message : "true"})
         })
         .post((req, res ,next) => {
@@ -61,7 +61,7 @@ function authenticate(passport){
         })
 
     router.route('/login')
-        .get(loggedOutOnly, (req, res, next) => {
+        .get(loggedOutOnly, (req, res) => {
             res.render('login')
         })
         .post(
@@ -73,17 +73,14 @@ function authenticate(passport){
         )
 
     router.route('/main')
-        .get(loggedInOnly, async(req, res, next) => {
-            var userData = await queryUtil.queryAllUsers()
-
+        .get(loggedInOnly, async(req, res) => {
             await Noticeboard.find((err, result) => {
                 if(err) { console.log(err) }
 
-                var user = JSON.parse(userData)
-                res.render('main', {data:result, user:user ,moment })
+                res.render('main', {data:result, moment })
             }).sort({"title" : 1})
         })
-        .post(loggedInOnly, (req ,res, next) => {
+        .post(loggedInOnly, (req ,res) => {
             var search = req.body.search
             // //All keys search
             // var allKeys = Noticeboard.findOne()
@@ -96,11 +93,27 @@ function authenticate(passport){
             }).sort({"title" : 1})
         })
 
-    router.route('/insert')
-        .get(loggedInOnly, (req, res, next) => {
-            res.render('insert')
+    router.route('/user')
+        .get(loggedInOnly, async(req, res) => {
+            var userData = await queryUtil.queryAllUsers()
+            var user = JSON.parse(userData)
+
+            res.render('user', {data:user})
         })
-        .post(loggedInOnly, (req, res, next) => {
+    
+    router.route('/blog')
+        .get(loggedInOnly, async(req, res) => {
+            var blogData = await queryUtil.queryAllBlogs()
+            var blog = JSON.parse(blogData)
+
+            res.render('blog', {data:blog})
+        })
+
+    router.route('/create')
+        .get(loggedInOnly, (req, res) => {
+            res.render('create')
+        })
+        .post(loggedInOnly, (req, res) => {
             var contact = new Noticeboard()
 
             contact.title = req.body.title
@@ -108,20 +121,41 @@ function authenticate(passport){
             contact.email = req.body.email
             contact.description = req.body.description
 
+            contact.save((err, result)=>{
+                if(err) {
+                    console.log(err)
+                }
+                res.redirect("/main")
+            })
+        })
+
+    router.route('/createUser')
+        .get(loggedInOnly, (req, res) => {
+            res.render('createUser')
+        })
+        .post(loggedInOnly, async (req, res) => {
+            var userNumber = req.body.userNumber
+            var username = req.body.username
+            var email = req.body.email
+            var phone = req.body.phone
+            var words = req.body.words
+
+            await queryUtil.createUser(userNumber, username, email, phone, words)
+            await res.redirect('/user')
+        })
+        
+    router.route('/createBlog')
+        .get(loggedInOnly, (req, res) => {
+            res.render('createBlog')
+        })
+        .post(loggedInOnly, async (req, res) => {
             var blogNumber = req.body.blogNumber
             var userNumber = req.body.userNumber
             var title = req.body.title
             var description = req.body.description
 
-            queryUtil.createBlog(blogNumber, userNumber, title, description)
-
-            contact.save((err, result)=>{
-                if(err) {
-                    console.log(err)
-                }
-                console.log(result)
-                res.redirect("/main")
-            })
+            await queryUtil.createBlog(blogNumber, userNumber, title, description)
+            await res.redirect('/blog')
         })
 
     router.route('/update/:id')
@@ -147,6 +181,40 @@ function authenticate(passport){
             })
         })
 
+    router.route('/updateUser/:userNumber')
+        .get(loggedInOnly, async (req, res) => {
+            var userNumber = req.params.userNumber
+            var user = await queryUtil.queryUser(userNumber)
+            var userData = await JSON.parse(user)
+
+            res.render('updateUser', {data:userData, userNumber:userNumber})
+        })
+        .post(loggedInOnly, async (req, res) => {
+            var userNumber = req.params.userNumber
+            var newUsername = req.body.newUsername
+
+            await queryUtil.changeUserName(userNumber, newUsername)
+            await res.redirect('/user')
+        })
+
+    router.route('/updateBlog/:blogNumber')
+        .get(loggedInOnly, async (req, res) => {
+            var blogNumber = req.params.blogNumber
+            var blog = await queryUtil.queryBlog(blogNumber)
+            var blogData = await JSON.parse(blog)
+
+            res.render('updateBlog', {data:blogData, blogNumber:blogNumber})
+        })
+
+        .post(loggedInOnly, async (req, res) => {
+            var blogNumber = req.params.blogNumber
+            var title = req.body.title
+            var description = req.body.description
+
+            await queryUtil.changeBlog(blogNumber, title, description)
+            await res.redirect('/blog')
+        })
+
     router.route('/delete/:id')
         .post(loggedInOnly, (req, res) => {
             var id = req.params.id
@@ -156,7 +224,7 @@ function authenticate(passport){
             })
         })
 
-    router.all("/logout", (req, res, next) => {
+    router.all("/logout", (req, res) => {
         req.logout()
         res.redirect('/')
     })

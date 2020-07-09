@@ -1,0 +1,33 @@
+<%- include('_header.ejs') -%>
+<div class="container">
+  <div class="col-md-6 mx-auto text-center">
+    <div class="header-title">
+      <h1 class="wv-heading--title">Create Blog</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="myform form ">
+        <form action="/createBlog" method="POST">
+          <div class="form-group">
+              <input type="text" name="blogNumber" class="form-control my-input" id="blogNumberInput" placeholder="Blog Number">
+            </div>
+          <div class="form-group">
+            <input type="text" name="userNumber" class="form-control my-input" id="userNumberInput" placeholder="User Number">
+          </div>
+          <div class="form-group">
+              <input type="text" name="title" class="form-control my-input" id="titleInput" placeholder="Title">
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" id="descriptionInput" name="description" rows="3" placeholder="description"></textarea>
+          </div>
+          <div class= "mx-auto text-center">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a href="/blog"><button type="button" class="btn btn-secondary">Cancel</button></a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('_footer.ejs') -%>
